@@ -9,13 +9,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/rss', (req, res) => {
-	console.log("/rss");
-	rssController.fetchData()
-	res.send(200)
-	
-
-})
+app.get('/rss', rssController.fetchData);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
