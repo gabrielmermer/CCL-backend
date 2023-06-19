@@ -22,6 +22,7 @@ const fetchFeed = async (url, res) => {
 	}
 };
 
+
 function getFeeds(req, res, next) {
 	let username = req.params.id;
 	rssModel.getFeeds(username)
@@ -38,6 +39,25 @@ function getUsers(req, res) {
 		})
 
 }
+
+function createUser(req, res) {
+  console.log(req.body);
+  let username = req.body.username;
+  let password = req.body.password;
+  console.log(username, password);
+
+  rssModel.createUser(username, password)
+    .then(() => {
+      res.redirect("http://localhost:5173/rss");
+    })
+    .catch((err) => {
+      // Handle the error
+      console.error(err);
+      res.sendStatus(500);
+    });
+}
+
+
 
 function authenticateUser(req, res, next) {
 		rssModel.getUsers()
@@ -60,6 +80,7 @@ module.exports = {
 	fetchFeed,
 	getFeeds,
 	getUsers,
-	authenticateUser
+	authenticateUser,
+	createUser
 
 };

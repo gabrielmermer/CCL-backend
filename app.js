@@ -50,33 +50,12 @@ app.route('/login')
 	
 
 app.get('/logout', (req, res) => {
+	console.log("logout starting")
 	res.cookie('accessToken', '', {maxAge: 0});
 	res.redirect('/')
 })
 
-//app.route('/login') 
-//	.get((req, res, next) => {
-//		// We don't need get here 
-//		rssController.getUsers()
-//			.then((users) => {
-//				res.json(users)
-//			})
-//			.catch((error) => {
-//				res.json(error)
-//
-//			});
-//	})
-//	.post((get, res, next) => {
-//		rssController.getUsers()
-//			.then((users) => {
-//				authenticationService.authenticateUser(req.body, users, res)
-//			})
-//			.catch((err) => {
-//				res.sendStatus(500)
-//			})
-//		
-//	});
-//
+app.post('/register', rssController.createUser) 
 
 
 

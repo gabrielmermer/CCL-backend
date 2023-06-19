@@ -90,10 +90,25 @@ let getUsers = () => new Promise((resolve, reject) => {
         }
     })
 });
+
+function createUser(name, password)  {
+    return new Promise((resolve, reject) => {
+        const sql = 'INSERT INTO CCL_users (username,password) VALUES (?, ?)';
+        db.query(sql, [name, password], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
+
 module.exports = {
 	fetchData,
 	fetchFeed,
 	getFeeds,
-	getUsers
+	getUsers,
+	createUser
 };
 
