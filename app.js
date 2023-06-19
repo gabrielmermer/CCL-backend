@@ -1,15 +1,31 @@
-
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const port = 3000
 
 const rssController = require('./controllers/rssController');
 
+const bodyParser = require('body-parser');
+
+//app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
+
+app.use(cors());
+
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+const authenticationService = require('./services/authentication');
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/rss', rssController.fetchData);
+//app.get('/rss', rssController.fetchData);
+app.get('/rss', authenticationService.authenticateJWT, rssController.fetchData);
+
+
 
 app.get('/rss/:url(*)', (req, res) => {
 	const url = req.params.url;
@@ -26,6 +42,42 @@ app.get('/rss/:url(*)', (req, res) => {
 });
 
 app.get('/feeds/:id', rssController.getFeeds);
+
+app.get('/users', rssController.getUsers);
+app.route('/login')
+	.get(rssController.getUsers)
+	.post(rssController.authenticateUser)
+	
+
+app.get('/logout', (req, res) => {
+	res.cookie('accessToken', '', {maxAge: 0});
+	res.redirect('/')
+})
+
+//app.route('/login') 
+//	.get((req, res, next) => {
+//		// We don't need get here 
+//		rssController.getUsers()
+//			.then((users) => {
+//				res.json(users)
+//			})
+//			.catch((error) => {
+//				res.json(error)
+//
+//			});
+//	})
+//	.post((get, res, next) => {
+//		rssController.getUsers()
+//			.then((users) => {
+//				authenticationService.authenticateUser(req.body, users, res)
+//			})
+//			.catch((err) => {
+//				res.sendStatus(500)
+//			})
+//		
+//	});
+//
+
 
 
 app.listen(port, () => {

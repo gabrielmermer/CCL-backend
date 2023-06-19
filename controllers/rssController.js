@@ -1,4 +1,5 @@
 const rssModel = require("../models/rssModel");
+const authenticationService = require('../services/authentication');
 
 function fetchData(req, res) {
 	rssModel.fetchData()
@@ -30,9 +31,35 @@ function getFeeds(req, res, next) {
 		})
 }
 
+function getUsers(req, res) {
+	rssModel.getUsers()
+		.then(data => {
+			res.json(data);
+		})
+
+}
+
+function authenticateUser(req, res, next) {
+		rssModel.getUsers()
+			.then((users) => {
+				console.log("passing users to authentication.js: ", users)
+				console.log("req body:", req.body);
+				authenticationService.authenticateUser(req, users, res)
+			})
+			.catch((err) => {
+				console.log(err);
+				res.sendStatus(500)
+			})
+
+}
+
+
+
 module.exports = {
 	fetchData,
 	fetchFeed,
-	getFeeds
+	getFeeds,
+	getUsers,
+	authenticateUser
 
 };

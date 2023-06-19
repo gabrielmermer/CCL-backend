@@ -17,6 +17,7 @@ async function fetchData() {
   }
 
   try {
+
     let feed = await parser.parseURL('https://www.stol.it/rss/feed/AlleRessorts');
     console.log('Parsed feed:');
 
@@ -77,9 +78,22 @@ let getFeeds = (username) => new Promise((resolve, reject) => {
   }
 });
 
+
+
+// auth
+let getUsers = () => new Promise((resolve, reject) => {
+    db.query("SELECT * FROM CCL_users", function (err, users, fields) {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(users);
+        }
+    })
+});
 module.exports = {
-  fetchData,
-  fetchFeed,
-  getFeeds,
+	fetchData,
+	fetchFeed,
+	getFeeds,
+	getUsers
 };
 
