@@ -117,12 +117,26 @@ let getUsername = (id) => new Promise((resolve, reject) => {
 
 
 
+function createFeed(username, feed_name, feed_url)  {
+    return new Promise((resolve, reject) => {
+        const sql = 'INSERT INTO CCL_feeds (username,feed_name, feed_url) VALUES (?, ?, ?)';
+        db.query(sql, [username, feed_name, feed_url], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
+
 module.exports = {
 	fetchData,
 	fetchFeed,
 	getFeeds,
 	getUsers,
 	createUser,
-	getUsername
+	getUsername,
+	createFeed
 };
 
