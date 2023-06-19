@@ -49,6 +49,7 @@ app.route('/login')
 	.post(rssController.authenticateUser)
 	
 
+// we also log out on the front end
 app.get('/logout', (req, res) => {
 	console.log("logout starting")
 	res.cookie('accessToken', '', {maxAge: 0});
@@ -57,6 +58,11 @@ app.get('/logout', (req, res) => {
 
 app.post('/register', rssController.createUser) 
 
+app.get('/username/:id', (req, res) => {
+	let id = req.params.id
+	rssController.getUsername(id, req, res)
+
+})
 
 
 app.listen(port, () => {

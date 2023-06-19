@@ -18,7 +18,7 @@ function authenticateUser(req, users, res){
 		console.log("USER FOUND ", user)
 		const accessToken = jwt.sign({ id: user.id, name: user.name }, ACCESS_TOKEN_SECRET);
 		res.cookie('accessToken', accessToken);
-		res.redirect("http://localhost:5173/rss")
+		res.redirect("localhost:5173/rss")
 	} else {
 		res.send('Username or password incorrect');
 	}

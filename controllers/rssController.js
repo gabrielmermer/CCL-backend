@@ -33,6 +33,7 @@ function getFeeds(req, res, next) {
 }
 
 function getUsers(req, res) {
+	console.log(res)
 	rssModel.getUsers()
 		.then(data => {
 			res.json(data);
@@ -73,6 +74,17 @@ function authenticateUser(req, res, next) {
 
 }
 
+function getUsername(id, req, res, next) {
+	rssModel.getUsername(id)
+		.then(data => {
+			console.log('Fetched data:', data);
+			console.log(res);
+			res.json(data)
+		})
+		.catch(error => {
+			console.error(error);
+		});
+}
 
 
 module.exports = {
@@ -81,6 +93,7 @@ module.exports = {
 	getFeeds,
 	getUsers,
 	authenticateUser,
-	createUser
+	createUser,
+	getUsername
 
 };

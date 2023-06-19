@@ -104,11 +104,25 @@ function createUser(name, password)  {
     });
 }
 
+
+let getUsername = (id) => new Promise((resolve, reject) => {
+    db.query("SELECT username FROM CCL_users where id = ?",[id], function (err, users, fields) {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(users);
+        }
+    })
+});
+
+
+
 module.exports = {
 	fetchData,
 	fetchFeed,
 	getFeeds,
 	getUsers,
-	createUser
+	createUser,
+	getUsername
 };
 
