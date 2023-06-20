@@ -67,6 +67,8 @@ app.get('/username/:id', (req, res) => {
 
 app.post('/createfeed', rssController.createFeed) 
 
+app.post('/deletefeed', rssController.deleteFeed) 
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -53,6 +53,9 @@ async function fetchFeed(url) {
     return feed;
   } catch (err) {
     console.error('Error while fetching/parsing RSS:', err);
+	return {
+		"feed": "404"
+	}
     throw err;
   }
 }
@@ -118,6 +121,23 @@ function createFeed(username, feed_name, feed_url)  {
     });
 }
 
+function deleteFeed(username, feed_name, feed_url) {
+  console.log("username ", username);
+  console.log("feed url ", feed_url);
+  console.log("feed_name ", feed_name);
+  return new Promise((resolve, reject) => {
+    const sql = 'DELETE FROM CCL_feeds WHERE username = ? AND feed_url = ? AND feed_name = ?';
+    db.query(sql, [username, feed_url, feed_name], (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+}
+
+
 module.exports = {
 	fetchData,
 	fetchFeed,
@@ -125,6 +145,7 @@ module.exports = {
 	getUsers,
 	createUser,
 	getUsername,
-	createFeed
+	createFeed,
+	deleteFeed
 };
 
