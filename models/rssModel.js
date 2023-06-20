@@ -58,26 +58,14 @@ async function fetchFeed(url) {
 }
 
 let getFeeds = (username) => new Promise((resolve, reject) => {
-  const cacheKey = `userFeeds-${username}`;
-
-  // Check if the data is already cached
-  const cachedData = cache.get(cacheKey);
-  if (cachedData) {
-    console.log('Returning cached user feeds:');
-    resolve(cachedData);
-  } else {
-    db.query("SELECT * FROM CCL_feeds WHERE username =" + db.escape(username), function (err, users, fields) {
-      if (err) {
-        reject(err);
-      } else {
-        // Cache the fetched data
-        cache.set(cacheKey, users);
-        resolve(users);
-      }
-    });
-  }
+  db.query("SELECT * FROM CCL_feeds WHERE username =" + db.escape(username), function (err, users, fields) {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(users);
+    }
+  });
 });
-
 
 
 // auth

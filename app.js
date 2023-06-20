@@ -45,7 +45,7 @@ app.get('/feeds/:id', rssController.getFeeds);
 
 app.get('/users', rssController.getUsers);
 app.route('/login')
-	.get(rssController.getUsers)
+	//.get(rssController.getUsers)
 	.post(rssController.authenticateUser)
 	
 

@@ -90,7 +90,7 @@ function createFeed(req, res, next) {
 	rssModel.createFeed(username, feedName, feedUrl)
 		.then(data => {
 			console.log('Fetched data:', data);
-			res.json(data)
+			res.redirect("http://localhost:5173/rss");
 		})
 		.catch(error => {
 			console.error(error);
