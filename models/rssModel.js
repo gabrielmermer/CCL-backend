@@ -54,7 +54,7 @@ async function fetchFeed(url) {
   } catch (err) {
     console.error('Error while fetching/parsing RSS:', err);
 	return {
-		"feed": "404"
+		"status": "404"
 	}
     throw err;
   }
